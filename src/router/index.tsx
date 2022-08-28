@@ -4,7 +4,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Modal from '../components/Modal';
 
 import CharacterDetail from '../pages/CharacterDetail';
-import Home from '../pages/Home';
+import CharacterList from '../pages/CharacterList';
+import EpisodeList from '../pages/EpisodeList';
+import Template from '../template';
 
 const Router: React.FC = () => {
 	const location = useLocation();
@@ -14,19 +16,18 @@ const Router: React.FC = () => {
 	return (
 		<>
 			<Routes location={state?.backgroundLocation || location}>
-				<Route index element={<Home />} />
-				<Route path='*' element={<div>Teste</div>} />
+				<Route element={<Template />}>
+					<Route path='characters' element={<CharacterList />} />
+					<Route path='episodes' element={<EpisodeList />} />
+				</Route>
 			</Routes>
 
 			<Modal open={!!state?.backgroundLocation}>
 				{!!state?.backgroundLocation && (
 					<Routes>
 						<Route path='character'>
-							<Route index element={<div>ALO</div>} />
 							<Route path=':id' element={<CharacterDetail />} />
-							<Route path='*' element={<div>ALO 2</div>} />
 						</Route>
-						<Route path='*' element={<div>Todos</div>} />
 					</Routes>
 				)}
 			</Modal>

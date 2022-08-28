@@ -6,10 +6,11 @@ import CharacterCard from '../../components/CharacterCard';
 import { listCharacters } from '../../services/characters';
 import Loader from '../../components/Loader';
 import { useLocation, useNavigate } from 'react-router-dom';
+import FetchMore from '../../components/FetchMore';
 
-const Home: React.FC = () => {
-	const [page, setPage] = React.useState(0);
-	const [characters, setCharacters] = React.useState<Array<any>>([]);
+const CharacterList: React.FC = () => {
+	const [page, setPage] = React.useState(1);
+	const [characters, setCharacters] = React.useState<Array<Character>>([]);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -18,27 +19,28 @@ const Home: React.FC = () => {
 		variables: {
 			page,
 		},
-		onCompleted: (data) => {
-			console.info(data.characters.info);
-			setCharacters((prev) => [...prev, ...data.characters.results]);
+		onCompleted: ({ data }) => {
+			setCharacters((prev) => [...prev, ...data.characters]);
 		},
 	});
 
 	const handleFetchMore = async () => {
-		setPage((page) => page + 1);
-
 		try {
-			await charactersFetch.fetchMore({
-				variables: {
-					page: page,
-				},
+			setPage((page) => {
+				charactersFetch.fetchMore({
+					variables: {
+						page: page + 1,
+					},
+				});
+
+				return page + 1;
 			});
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-	const handleDetail = (id: string) => () => {
+	const handleDetail = (id: number) => () => {
 		navigate(`/character/${id}`, {
 			state: {
 				backgroundLocation: location,
@@ -47,28 +49,29 @@ const Home: React.FC = () => {
 	};
 
 	return (
-		<div className='w-full min-h-full px-4 md:px-16 py-4 bg-indigo-600'>
+		<div className='w-full min-h-full px-4 md:px-16 py-4 bg-gray-50'>
 			{charactersFetch.loading && <Loader />}
 			{charactersFetch.error && <span>Error!</span>}
 
 			<div className='flex flex-row flex-wrap justify-center gap-4'>
-				{characters.map((character: any, index: number) => (
+				{characters.map((character, index: number) => (
 					<CharacterCard
 						key={index + '_' + character.id}
 						{...character}
-						onClick={handleDetail(character.id)}
+						onClick={handleDetail(character.id!)}
 					/>
 				))}
 			</div>
 
 			<div className='flex justify-center items-center mt-4'>
-				<div
-					className='w-8 h-8 rounded-full bg-white cursor-pointer'
+				<FetchMore
 					onClick={handleFetchMore}
+					page={page}
+					totalPage={charactersFetch.data?.data?.info?.pages}
 				/>
 			</div>
 		</div>
 	);
 };
 
-export default Home;
+export default CharacterList;

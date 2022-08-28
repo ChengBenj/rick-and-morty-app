@@ -5,7 +5,7 @@ type OverlayProps = {
 const Overlay = ({ onClick }: OverlayProps) => {
 	return (
 		<div
-			className='fixed inset-0 w-full h-full bg-black opacity-30'
+			className='fixed inset-0 w-full h-full bg-black opacity-30 z-20'
 			onClick={onClick}
 		/>
 	);

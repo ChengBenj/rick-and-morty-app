@@ -23,7 +23,7 @@ const Modal = ({ open, children }: React.PropsWithChildren<ModalProps>) => {
 				{open && <Overlay onClick={handleClick} />}
 			</motion.div>
 			<motion.div
-				className='fixed inset-1/4 top-32 min-w-[500px] rounded-2xl bg-white overflow-x-hidden overflow-y-auto'
+				className='z-30 fixed inset-1/4 top-32 min-w-[500px] rounded-2xl bg-white overflow-x-hidden overflow-y-auto'
 				animate={{
 					y: open ? 0 : 800,
 				}}

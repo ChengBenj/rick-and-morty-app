@@ -2,36 +2,15 @@ import { gql } from '@apollo/client';
 
 export const listCharacters = gql`
 	query listCharacters($page: Int!) {
-		characters(page: $page) {
+		data: characters(page: $page) {
 			info {
 				count
 				pages
 			}
-			results {
+			characters: results {
 				id
 				name
-				status
-				species
-				type
 				image
-				gender
-				origin {
-					id
-					name
-					type
-					dimension
-				}
-				location {
-					id
-					name
-					type
-					dimension
-				}
-				episode {
-					id
-					name
-					episode
-				}
 			}
 		}
 	}

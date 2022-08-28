@@ -8,13 +8,12 @@ The main reason of this repo is learn how to use GraphQL in React, use Vite with
 - Framer
 - Apollo (GraphQL)
 - Tailwind
-- Zustand
 
 ## Todo list
 
 - [x] Characters list
 - [x] Character Modal
-- [] Episodes list
+- [x] Episodes list
 - [x] Background routes
 - [x] Create modal animation with framer
 - [x] Request data with GraphQL

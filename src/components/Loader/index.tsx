@@ -3,7 +3,7 @@ import Overlay from '../Overlay';
 
 const Loader: React.FC = () => {
 	return (
-		<div className='fixed inset-0 w-full h-full flex items-center justify-center'>
+		<div className='fixed inset-0 w-full h-full flex items-center justify-center z-20'>
 			<Overlay />
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
